@@ -1,9 +1,12 @@
 $(document).ready(function () {
 
+  //used to know if its add or update
   var selectedFilm = false;
 
   getAllFilm();
 
+
+  //take out the list business to a separate function to call it after modification to refresh
   function getAllFilm() {
     $.get('http://127.0.0.1:8000/api/film', function (result) {
       var rows = '';
@@ -26,6 +29,8 @@ $(document).ready(function () {
 
   }
 
+
+  //GET all genres
   $.get('http://127.0.0.1:8000/api/genre', function (result) {
 
     result.map(function (genre) {
@@ -35,6 +40,8 @@ $(document).ready(function () {
 
   })
 
+
+  //on click add button , we take input values and verify if its an add or update using our selectedFilm variable
   $('#btnAdd').on('click', function (event) {
     $('#btnAdd').attr('disabled', 'true');
     $('#btnAdd').text('saving');
@@ -126,6 +133,7 @@ $(document).ready(function () {
   }, 1000)
 
 
+  //clear inputs
   $('#btnCancel').on('click', function (e) {
     e.preventDefault();
     selectedFilm = false;
