@@ -17,7 +17,8 @@ $(document).ready(function () {
           '<td>' + film.auteur + '</td>' +
           '<td>' + film.date_sortie + '</td>' +
           '<td>' + film.genre.nom + '</td>' +
-          '<td>' + '<button class="btnEdit" data-film="' + film.id + '">Edit</button>' + '</td>' +
+          '<td>' + '<button class="btn btn-info btnEdit" data-film="' + film.id + '">Edit</button>' + '</td>' +
+          '<td>' + '<button class="btn btn-danger btnDelete" data-film="' + film.id + '">Delete</button>' + '</td>' +
           '</tr>'
 
         rows = rows + filmDom
@@ -113,9 +114,11 @@ $(document).ready(function () {
   })
 
 
-  //setTimeout used beacause the Edit button will be renderer using jquery so after the initial render
-  // so if we dont use it , it will register click listener on button with class btnEdit which is unexistant yet
+  //setTimeout used beacause the Edit button and delete button will be renderer using jquery so after the initial render
+  // so if we dont use setTimeout , it will register the click listener on button with class btnEdit which is unexistant yet
   setTimeout(function () {
+
+    //Select film
     $('.btnEdit').on('click', function (event) {
       var filmID = event.target.dataset.film;
       $.get('http://127.0.0.1:8000/api/film/' + filmID, function (film) {
@@ -130,6 +133,32 @@ $(document).ready(function () {
 
       })
     })
+
+
+    //delete film
+    $('.btnDelete').on('click', function (event) {
+      var filmID = event.target.dataset.film;
+
+      var res = confirm('Voulez vous vraimer supprimer ce film');
+
+      if (res) {
+        $.ajax({
+          url: 'http://127.0.0.1:8000/api/film/' + filmID,
+          type: 'delete',
+          dataType: 'json',
+          success: function (result) {
+            getAllFilm();
+
+          },
+          error: function (error) {
+            console.log(error)
+            getAllFilm();
+          },
+        });
+      }
+    })
+
+
   }, 1000)
 
 
