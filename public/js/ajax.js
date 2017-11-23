@@ -114,10 +114,8 @@ $(document).ready(function () {
   })
 
 
-  //setTimeout used beacause the Edit button and delete button will be renderer using jquery so after the initial render
-  // so if we dont use setTimeout , it will register the click listener on button with class btnEdit which is unexistant yet
-
-
+  //i used a function to register listener on those buttons because the Edit button and delete button will be renderer using jquery so after the initial render
+  // so if we dont register it after the rendering of the buttons , it will register the click listener on button with class btnEdit which is unexistant yet
   function registerListener() {
     //Select film
     $('.btnEdit').on('click', function (event) {
