@@ -36,7 +36,7 @@ class FilmController extends Controller
     {
         $genres = Genre::all();
         $tags = Tag::all();
-        return view('films.create', compact('genres','tags'));
+        return view('films.create', compact('genres', 'tags'));
     }
 
     /**
@@ -49,13 +49,13 @@ class FilmController extends Controller
     {
 //        dd($request->get('tags'));
         $film = Film::create($request->except('tags'));
+        $film->tags()->sync($request->get('tags'));
 
-        foreach ($request->get('tags') as $tagId)
-        {
-            $tag = Tag::find($tagId);
-            $film->tags()->attach($tag);
-        }
-
+//        foreach ($request->get('tags') as $tagId) {
+//            $tag = Tag::find($tagId);
+//            $film->tags()->attach($tag);
+//        }
+//
         return redirect()->route('film.index');
     }
 
@@ -79,7 +79,9 @@ class FilmController extends Controller
     public function edit(Film $film)
     {
         $genres = Genre::all();
-        return view('films.edit', compact('genres', 'film'));
+        $tags = Tag::all();
+
+        return view('films.edit', compact('genres', 'tags', 'film'));
 
     }
 
@@ -92,7 +94,9 @@ class FilmController extends Controller
      */
     public function update(UpdateFilmRequest $request, Film $film)
     {
-        $film->fill($request->all());
+//        dd($request->get('tags'));
+        $film->tags()->sync($request->get('tags'));
+        $film->fill($request->except('tags'));
         $film->save();
 
         return redirect()->route('film.index');

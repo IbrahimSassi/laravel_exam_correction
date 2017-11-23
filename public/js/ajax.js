@@ -25,6 +25,7 @@ $(document).ready(function () {
       });
       $('table').html('')
       $('table').append(rows)
+      registerListener()
 
     })
 
@@ -40,7 +41,6 @@ $(document).ready(function () {
     });
 
   })
-
 
   //on click add button , we take input values and verify if its an add or update using our selectedFilm variable
   $('#btnAdd').on('click', function (event) {
@@ -116,8 +116,9 @@ $(document).ready(function () {
 
   //setTimeout used beacause the Edit button and delete button will be renderer using jquery so after the initial render
   // so if we dont use setTimeout , it will register the click listener on button with class btnEdit which is unexistant yet
-  setTimeout(function () {
 
+
+  function registerListener() {
     //Select film
     $('.btnEdit').on('click', function (event) {
       var filmID = event.target.dataset.film;
@@ -138,6 +139,7 @@ $(document).ready(function () {
     //delete film
     $('.btnDelete').on('click', function (event) {
       var filmID = event.target.dataset.film;
+      console.log(filmID)
 
       var res = confirm('Voulez vous vraimer supprimer ce film');
 
@@ -145,7 +147,6 @@ $(document).ready(function () {
         $.ajax({
           url: 'http://127.0.0.1:8000/api/film/' + filmID,
           type: 'delete',
-          dataType: 'json',
           success: function (result) {
             getAllFilm();
 
@@ -158,9 +159,7 @@ $(document).ready(function () {
       }
     })
 
-
-  }, 1000)
-
+  }
 
   //clear inputs
   $('#btnCancel').on('click', function (e) {

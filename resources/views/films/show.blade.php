@@ -3,10 +3,13 @@
 @section('content')
 
     <div class="container">
-        <h1>{{$film->nom}}</h1>
-        <h2>{{$film->auteur}}</h2>
-        <h3>{{$film->genre->nom}}</h3>
-        <h3>{{$film->genre->nom}}</h3>
+        <h1>Nom :{{$film->nom}}</h1>
+        <h2>Auteur : {{$film->auteur}}</h2>
+        <h3>Genre :{{$film->genre->nom}}</h3>
+        @foreach($film->tags as $tag)
+            <span class="badge">{{$tag->label}}</span>
+        @endforeach
+        <br>
         <a href="{{route('film.edit',$film)}}" class="btn btn-info">Edit</a>
 
         <form method="post" action="{{route('film.destroy',$film)}}">

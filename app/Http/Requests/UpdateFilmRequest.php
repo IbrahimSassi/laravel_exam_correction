@@ -23,8 +23,10 @@ class UpdateFilmRequest extends FormRequest
      */
     public function rules()
     {
+        $film = $this->route('film');
+
         return [
-            'nom' => 'required|unique:films',
+            'nom' => 'required|unique:films,nom,' . $film->id,
             'auteur' => 'required|min:4',
             'genre_id' => 'required'
         ];
