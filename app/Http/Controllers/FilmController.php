@@ -110,4 +110,10 @@ class FilmController extends Controller
         $film->delete();
         return redirect()->route('film.index');
     }
+
+
+    public function api()
+    {
+        return view('ajax.index');
+    }
 }

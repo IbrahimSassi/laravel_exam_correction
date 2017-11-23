@@ -25,3 +25,6 @@ Route::resource('genre', 'GenreController');
 Route::get('/favori', 'FavoriController@listFavori')->name('favori.index');
 Route::get('/favori/add/{film}', 'FavoriController@addFavori')->name('favori.store');
 Route::get('/favori/delete/{film}', 'FavoriController@destroyFavori')->name('favori.destroy');
+
+
+Route::get('/ajax-films', 'FilmController@api');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Film;
 use Illuminate\Http\Request;
 
-class ApiController extends Controller
+class ApiFilmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,9 +45,9 @@ class ApiController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Film $film)
     {
-        //
+        return $film;
     }
 
     /**
@@ -68,9 +68,11 @@ class ApiController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Film $film)
     {
-        //
+        $film->fill($request->all());
+        $film->save();
+        return response('done', 200);
     }
 
     /**
